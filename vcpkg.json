@@ -1,0 +1,10 @@
+{
+  "name": "occt-qt-scaffold",
+  "version-string": "0.1.0",
+  "description": "OCCT (OpenCASCADE) + Qt5 scaffold with a basic 3D viewer",
+  "dependencies": [
+    "opencascade",
+    "qt5"
+  ]
+}
+
