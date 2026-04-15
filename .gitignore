@@ -13,6 +13,7 @@ Thumbs.db
 build/
 build-*/
 cmake-build-*/
+CMakeSettings.json
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
