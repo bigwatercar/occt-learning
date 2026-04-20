@@ -25,14 +25,18 @@
 1. 生成 VS2022 工程（推荐 out-of-source）：
 
 ```powershell
-cd D:\Personal\github\occt-learning
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
-  -DCMAKE_TOOLCHAIN_FILE="<vcpkg_root>\scripts\buildsystems\vcpkg.cmake"
+cd C:\Personal\Projects\OcctLearning\occ-skeleton
 
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="%VCPKG_ROOT%\scripts\buildsystems\vcpkg.cmake"
+# 方式 A：显式指定 toolchain（推荐）
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64 `
+  -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT\scripts\buildsystems\vcpkg.cmake" `
+  -DVCPKG_TARGET_TRIPLET=x64-windows
+
+# 方式 B：依赖 CMakeLists.txt 自动探测 VCPKG_ROOT
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 ```
 
-> 说明：这是 **vcpkg manifest** 模式，第一次配置会自动解析 `vcpkg.json` 并安装依赖。
+> 说明：这是 **vcpkg manifest** 模式，第一次配置会自动解析 `vcpkg.json` 并安装依赖（Qt5 首次安装耗时较长）。
 
 1. 编译：
 
@@ -61,4 +65,3 @@ cmake --build build --config Release
 
 - `src/OccView.*`：封装 OCCT Viewer/Context/View，默认显示圆锥，并使用 `AIS_ViewController` 实现基础交互。
 - 如果你希望 **强制锁定 OCCT 7.9.3**（以及 Qt 版本），建议在仓库中加入 `vcpkg-configuration.json` 并指定你本机 vcpkg 的 builtin baseline（一个 commit hash）。你把 `vcpkg --version` 和 vcpkg 当前 commit 发我，我可以帮你生成对应文件。
-
